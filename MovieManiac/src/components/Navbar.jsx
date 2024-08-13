@@ -22,6 +22,7 @@ const Navbar = ({fire, star, party}) => {
         </div>
 
         <h1> This is test 2</h1>
+        <h1> This is navbar Test 2</h1>
     </nav>
   )
 }
