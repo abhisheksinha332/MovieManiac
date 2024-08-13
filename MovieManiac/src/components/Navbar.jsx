@@ -6,6 +6,8 @@ const Navbar = ({fire, star, party}) => {
         <div>
         <h1>MovieManiac</h1>
         </div>
+
+        <h1>This is test</h1>
         
         <div className="navbar_links">
         <div className="navbar_links">
