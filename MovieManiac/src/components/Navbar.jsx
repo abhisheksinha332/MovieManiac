@@ -18,6 +18,8 @@ const Navbar = ({fire, star, party}) => {
             <a href=''> Upcoming <img src={party} alt='upcoming' className='navbar_emoji'/> </a>
         </div>
         </div>
+
+        <h1> This is test 2</h1>
     </nav>
   )
 }
