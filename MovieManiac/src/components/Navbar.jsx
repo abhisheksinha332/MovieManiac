@@ -7,7 +7,7 @@ const Navbar = ({fire, star, party}) => {
         <h1>MovieManiac</h1>
         </div>
 
-        
+        <h1>This is navbar Test 1</h1>
         
         <div className="navbar_links">
         <div className="navbar_links">
