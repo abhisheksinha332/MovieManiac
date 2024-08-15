@@ -10,6 +10,23 @@ import MovieList from './components/MovieList';
 
 
 const App = () => {
+
+
+  const Api = async()=>{
+    
+    const url= 'http://www.omdbapi.com/?s=marvel&y=2017&apikey=147e2360'
+    
+    try {
+      const response = await fetch(url);
+      const result = await response.text();
+      console.log(result);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  Api()
+  
   return (
     <div className='app'>
       <Navbar fire={fire} star={star} party={party} />
