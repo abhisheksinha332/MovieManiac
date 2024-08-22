@@ -1,9 +1,33 @@
-import React from 'react'
+import React,{useEffect, useState} from 'react'
 import MovieCard from './MovieCard'
 
 
 
 const MovieList = ({fire, star}) => {
+
+    const [movieData, setMovieData] = useState([])
+    useEffect(() => {
+                
+        Api()
+
+        }, [])
+        
+        const Api = async()=>{
+        const url= 'http://www.omdbapi.com/?s=fast&apikey=147e2360'
+        
+        try {
+          const response = await fetch(url);
+          const result = await response.json();
+          console.log(result);
+          setMovieData(result.Search)
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+      console.log('MovideData',movieData);
+      
+
   return (
     <section className='movie_list'>
         <header className='movie_list_header'>
@@ -32,7 +56,11 @@ const MovieList = ({fire, star}) => {
         </header>
 
         <div className="movie_cards">
-            <MovieCard star={star}/>
+
+        {
+            movieData.map(movie=> <MovieCard key={movie.imdbID} movie={movie}/>)
+            }
+            
         </div>
     </section>
   )
