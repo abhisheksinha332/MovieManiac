@@ -1,6 +1,9 @@
 import React,{useEffect, useState} from 'react'
+import _ from 'lodash'
+
 import MovieCard from './MovieCard'
 import FilterGroup from './FilterGroup'
+
 
 
 
@@ -9,7 +12,7 @@ const MovieList = ({fire, star}) => {
     const [movieData, setMovieData] = useState([])
     const [animeData, setAnimeData] = useState([])
     const [sort, setSort] = useState({
-        by : "Default",
+        by : "default",
         order : "asc"
     })
     const [rating, setRating] = useState(0)
@@ -18,6 +21,15 @@ const MovieList = ({fire, star}) => {
         Api()
 
         }, [])
+
+    useEffect(()=> {
+        if(sort.by !== "default" ){
+           const sortedAnime =  _.orderBy(animeData, [sort.by] , [sort.order])
+           setAnimeData(sortedAnime)
+
+          console.log(animeData) 
+        }
+    },[sort])
         
         const Api = async()=>{
         const url= 'https://kitsu.io/api/edge/anime'
@@ -49,14 +61,12 @@ const MovieList = ({fire, star}) => {
       
     const handleSort = (e) => {
         const {name, value} = e.target
-
+        
         setSort(prev=> {
             return {...prev,[name]: value}
         })
     }
 
-    console.log(sort);
-    
   return (
     <section className='movie_list'>
         <header className='movie_list_header'>
@@ -69,7 +79,7 @@ const MovieList = ({fire, star}) => {
                <FilterGroup handleRating={handleRating} rating={rating} ratings={[8,7,6]}/>
 
                 <select name="by" id="" className="movie_list_sorting" onChange={handleSort} value={sort.by}>
-                    <option value="Default">Sort By</option>
+                    <option value="default">Sort By</option>
                     <option value="startDate">Date</option>
                     <option value="averageRating">Rating</option>
                 </select>

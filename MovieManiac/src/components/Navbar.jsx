@@ -1,4 +1,5 @@
 import React from 'react'
+import DarkMode from './DarkMode/DarkMode'
 
 const Navbar = ({fire, star, party}) => {
   return (
@@ -9,6 +10,7 @@ const Navbar = ({fire, star, party}) => {
         
         <div className="navbar_links">
         <div className="navbar_links">
+          <DarkMode />
             <a href=''> Popular <img src={fire} alt='popular' className='navbar_emoji' /> </a>
         </div>
         <div className="navbar_links">
