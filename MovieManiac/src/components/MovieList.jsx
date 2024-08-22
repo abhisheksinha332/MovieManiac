@@ -1,11 +1,18 @@
 import React,{useEffect, useState} from 'react'
 import MovieCard from './MovieCard'
+import FilterGroup from './FilterGroup'
 
 
 
 const MovieList = ({fire, star}) => {
 
     const [movieData, setMovieData] = useState([])
+    const [animeData, setAnimeData] = useState([])
+    const [sort, setSort] = useState({
+        by : "Default",
+        order : "asc"
+    })
+    const [rating, setRating] = useState(0)
     useEffect(() => {
                 
         Api()
@@ -20,15 +27,36 @@ const MovieList = ({fire, star}) => {
           const response = await fetch(url);
           const result = await response.json();
           setMovieData(result.data)
+          setAnimeData(result.data)
         
         } catch (error) {
           console.error(error);
         }
       }
 
-     
-      
+     const handleRating = (rate) => {
 
+        if(rate === rating){
+            setRating(0)
+            setAnimeData(movieData)
+        }
+        else{
+            setRating(rate)
+            const filtered = movieData.filter(movies => (movies.attributes.averageRating / 10).toFixed(1) >= rate)
+            setAnimeData(filtered)   
+        }
+     }
+      
+    const handleSort = (e) => {
+        const {name, value} = e.target
+
+        setSort(prev=> {
+            return {...prev,[name]: value}
+        })
+    }
+
+    console.log(sort);
+    
   return (
     <section className='movie_list'>
         <header className='movie_list_header'>
@@ -38,20 +66,16 @@ const MovieList = ({fire, star}) => {
             </h2>
 
             <div className="movie_list_fs">
-                <ul className="movie_filter">
-                    <li className="movie_filter_item active" >8+ Star</li>
-                    <li className="movie_filter_item">7+ Star</li>
-                    <li className="movie_filter_item">6+ Star</li>
-                </ul>
+               <FilterGroup handleRating={handleRating} rating={rating} ratings={[8,7,6]}/>
 
-                <select name="" id="" className="movie_list_sorting">
-                    <option value="">Sort By</option>
-                    <option value="">Date</option>
-                    <option value="">Rating</option>
+                <select name="by" id="" className="movie_list_sorting" onChange={handleSort} value={sort.by}>
+                    <option value="Default">Sort By</option>
+                    <option value="startDate">Date</option>
+                    <option value="averageRating">Rating</option>
                 </select>
-                <select name="" id="" className="movie_list_sorting">
-                    <option value="">Ascending</option>
-                    <option value="">Descending</option>
+                <select name="order" id="" className="movie_list_sorting" onChange={handleSort} value={sort.order}>
+                    <option value="asc">Ascending</option>
+                    <option value="desc">Descending</option>
                 </select>
             </div>
         </header>
@@ -59,7 +83,7 @@ const MovieList = ({fire, star}) => {
         <div className="movie_cards">
 
        {
-            movieData.map(movie=> <MovieCard key={movie.id} movie={movie} star={star}/>)
+            animeData.map(anime=> <MovieCard key={anime.id} anime={anime} star={star}/>)
             } 
 
           
