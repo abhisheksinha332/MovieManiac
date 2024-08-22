@@ -13,19 +13,20 @@ const MovieList = ({fire, star}) => {
         }, [])
         
         const Api = async()=>{
-        const url= 'http://www.omdbapi.com/?s=fast&apikey=147e2360'
+        const url= 'https://kitsu.io/api/edge/anime'
+        // const url= 'http://www.omdbapi.com/?s=fast&apikey=147e2360'
         
         try {
           const response = await fetch(url);
           const result = await response.json();
-          console.log(result);
-          setMovieData(result.Search)
+          setMovieData(result.data)
+        
         } catch (error) {
           console.error(error);
         }
       }
 
-      console.log('MovideData',movieData);
+     
       
 
   return (
@@ -57,9 +58,11 @@ const MovieList = ({fire, star}) => {
 
         <div className="movie_cards">
 
-        {
-            movieData.map(movie=> <MovieCard key={movie.imdbID} movie={movie}/>)
-            }
+       {
+            movieData.map(movie=> <MovieCard key={movie.id} movie={movie} star={star}/>)
+            } 
+
+          
             
         </div>
     </section>
